@@ -1,2 +1,5 @@
 packages/
+Output/
 *.GhostDoc.xml
+*/obj/
+*/bin/
