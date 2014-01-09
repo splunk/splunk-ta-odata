@@ -1,0 +1,15 @@
+﻿<input>
+   <server_host>RETINA</server_host>
+   <!--<server_uri>https://127.0.0.1:8089</server_uri>-->
+   <!-- the real session key would look more like a sha -->
+   <session_key>dontusethiskeyitsnotcurrentatall</session_key>
+   <!-- note, this is nothing like the real path, but it works for testing.
+       the real path is in C:\Program Files(x86) and requires elevation -->
+   <checkpoint_dir>C:\ProgramData\Splunk\modinputs\powershell</checkpoint_dir>
+   <configuration>
+      <stanza name="odata://Testing1Minute">
+         <param name="address"><![CDATA[http://bd-xd7-01/Citrix/Monitor/OData/v1/Data/Sessions?$filter=StartDate ge datetime'2014-01-08T12:00:00'&$select=StartDate,EndDate]]></param>
+         <param name="sourcetype">nuget_packages</param>
+      </stanza>
+   </configuration>
+</input>

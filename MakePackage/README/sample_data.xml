@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xml:base="http://localhost/Citrix/Monitor/OData/v1/Data/" xmlns="http://www.w3.org/2005/Atom" xmlns:d="http://schemas.microsoft.com/ado/2007/08/dataservices" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata">
+   <id>http://localhost/Citrix/Monitor/OData/v1/Data/Sessions</id>
+   <title type="text">Sessions</title>
+   <updated>2014-01-08T21:14:59Z</updated>
+   <link rel="self" title="Sessions" href="Sessions" />
+   <entry>
+      <id>http://localhost/Citrix/Monitor/OData/v1/Data/Sessions(guid'd8f82061-8089-4926-8b10-7e7a3251b7c5')</id>
+      <category term="Citrix.Monitor.Repository.Session" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+      <link rel="edit" title="Session" href="Sessions(guid'd8f82061-8089-4926-8b10-7e7a3251b7c5')" />
+      <link rel="http://schemas.microsoft.com/ado/2007/08/dataservices/related/User" type="application/atom+xml;type=entry" title="User" href="Sessions(guid'd8f82061-8089-4926-8b10-7e7a3251b7c5')/User">
+         <m:inline>
+            <entry>
+               <id>http://localhost/Citrix/Monitor/OData/v1/Data/Users(1L)</id>
+               <category term="Citrix.Monitor.Repository.User" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+               <link rel="edit" title="User" href="Users(1L)" />
+               <title />
+               <updated>2014-01-08T21:14:59Z</updated>
+               <author>
+                  <name />
+               </author>
+               <content type="application/xml">
+                  <m:properties>
+                     <d:UserName>a-jconger</d:UserName>
+                  </m:properties>
+               </content>
+            </entry>
+         </m:inline>
+      </link>
+      <title />
+      <updated>2014-01-08T21:14:59Z</updated>
+      <author>
+         <name />
+      </author>
+      <content type="application/xml">
+         <m:properties>
+            <d:StartDate m:type="Edm.DateTime">2013-09-20T17:15:02.62</d:StartDate>
+         </m:properties>
+      </content>
+   </entry>
+   <entry>
+      <id>http://localhost/Citrix/Monitor/OData/v1/Data/Sessions(guid'93f0a196-0b78-4b7c-a6be-a00d028c4f85')</id>
+      <category term="Citrix.Monitor.Repository.Session" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+      <link rel="edit" title="Session" href="Sessions(guid'93f0a196-0b78-4b7c-a6be-a00d028c4f85')" />
+      <link rel="http://schemas.microsoft.com/ado/2007/08/dataservices/related/User" type="application/atom+xml;type=entry" title="User" href="Sessions(guid'93f0a196-0b78-4b7c-a6be-a00d028c4f85')/User">
+         <m:inline>
+            <entry>
+               <id>http://localhost/Citrix/Monitor/OData/v1/Data/Users(1L)</id>
+               <category term="Citrix.Monitor.Repository.User" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+               <link rel="edit" title="User" href="Users(1L)" />
+               <title />
+               <updated>2014-01-08T21:14:59Z</updated>
+               <author>
+                  <name />
+               </author>
+               <content type="application/xml">
+                  <m:properties>
+                     <d:UserName>a-jconger</d:UserName>
+                  </m:properties>
+               </content>
+            </entry>
+         </m:inline>
+      </link>
+      <title />
+      <updated>2014-01-08T21:14:59Z</updated>
+      <author>
+         <name />
+      </author>
+      <content type="application/xml">
+         <m:properties>
+            <d:StartDate m:type="Edm.DateTime">2013-10-11T22:19:15.713</d:StartDate>
+         </m:properties>
+      </content>
+   </entry>
+   <entry>
+      <id>http://localhost/Citrix/Monitor/OData/v1/Data/Sessions(guid'ecf235a9-dc4c-4ab4-890c-d8862a388c6a')</id>
+      <category term="Citrix.Monitor.Repository.Session" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+      <link rel="edit" title="Session" href="Sessions(guid'ecf235a9-dc4c-4ab4-890c-d8862a388c6a')" />
+      <link rel="http://schemas.microsoft.com/ado/2007/08/dataservices/related/User" type="application/atom+xml;type=entry" title="User" href="Sessions(guid'ecf235a9-dc4c-4ab4-890c-d8862a388c6a')/User">
+         <m:inline>
+            <entry>
+               <id>http://localhost/Citrix/Monitor/OData/v1/Data/Users(1L)</id>
+               <category term="Citrix.Monitor.Repository.User" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+               <link rel="edit" title="User" href="Users(1L)" />
+               <title />
+               <updated>2014-01-08T21:14:59Z</updated>
+               <author>
+                  <name />
+               </author>
+               <content type="application/xml">
+                  <m:properties>
+                     <d:UserName>a-jconger</d:UserName>
+                  </m:properties>
+               </content>
+            </entry>
+         </m:inline>
+      </link>
+      <title />
+      <updated>2014-01-08T21:14:59Z</updated>
+      <author>
+         <name />
+      </author>
+      <content type="application/xml">
+         <m:properties>
+            <d:StartDate m:type="Edm.DateTime">2013-10-12T19:17:37.16</d:StartDate>
+         </m:properties>
+      </content>
+   </entry>
+</feed>
