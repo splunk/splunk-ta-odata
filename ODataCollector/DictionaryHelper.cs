@@ -5,9 +5,6 @@
    using System.Collections.Generic;
    using System.Globalization;
    using System.Linq;
-   using System.Text;
-   using System.Threading.Tasks;
-
 
    /// <summary>
    /// Helper extension methods for string dictionaries
@@ -35,6 +32,31 @@
             {
                yield return new KeyValuePair<string, object>(name, output[name]);
             }
+         }
+      }
+
+
+      /// <summary>
+      /// Recursively selects dictionary elements
+      /// </summary>
+      /// <param name="output">The dictionary.</param>
+      /// <param name="keys">The list of keys.</param>
+      /// <returns>The output value from the dictionary</returns>
+      public static object SelectRecursive(this IDictionary output, IEnumerable<string> keys = null)
+      {
+         if (keys == null)
+         {
+            return output;
+         }
+         else
+         {
+            var k = keys.GetEnumerator();
+            object result = output;
+            while ((result is IDictionary) && k.MoveNext())
+            {
+               result = ((IDictionary)result)[k.Current];
+            }
+            return result;
          }
       }
 
@@ -87,50 +109,59 @@
       /// <returns>The string representation of the object</returns>
       public static string ToString(this KeyValuePair<string, object> data, string formatString = "{0}=\"{1}\"", bool keysForEmptyValues = false)
       {
-         var output = new StringBuilder();
-
          // If we can't access the name, just give up right away
          if (!string.IsNullOrEmpty(data.Key))
          {
-            string value = string.Empty;
-
             string name = data.Key;
 
-            try
+            var objects = data.Value as IDictionary<string, object>;
+            if (objects != null)
             {
-               if (data.Value != null)
-               {
-                  // The "O" or "o" standard format specifier represents a custom date and time format string using a pattern that preserves time zone information.
-                  if (data.Value is DateTime)
-                  {
-                     value = ((DateTime)data.Value).ToString("o");
-                  }
-                  else if (data.Value is DateTimeOffset)
-                  {
-                     value = ((DateTimeOffset)data.Value).ToString("o");
-                  }
-                  else if (data.Value is IDictionary<string, object>)
-                  {
-                     return ((IDictionary<string, object>) data.Value).ToString(formatString: name + "." + formatString);
-                  }
-                  else
-                  {
-                     value = string.Format(CultureInfo.InvariantCulture, "{0}", data.Value);
-                  }
-               }
+               return objects.ToString(formatString: name + "." + formatString);
             }
-            catch
-            {
-               value = string.Empty;
-            }
+
+            string value = ToStringInvariant(data);
 
             if (keysForEmptyValues || !string.IsNullOrWhiteSpace(value))
             {
                return string.Format(formatString, name, value);
             }
-            else return string.Empty;
          }
-         else return string.Empty;
+         return string.Empty;
+      }
+
+      /// <summary>
+      /// Renders the object as a string using invariant round-trip friendly formats
+      /// </summary>
+      /// <param name="value">The value.</param>
+      /// <returns>The string representation</returns>
+      public static string ToStringInvariant(this object value)
+      {
+         string result = string.Empty;
+         try
+         {
+            if (value != null)
+            {
+               // The "O" or "o" standard format specifier represents a custom date and time format string using a pattern that preserves time zone information.
+               if (value is DateTime)
+               {
+                  result = ((DateTime) value).ToString("o");
+               }
+               else if (value is DateTimeOffset)
+               {
+                  result = ((DateTimeOffset) value).ToString("o");
+               }
+               else
+               {
+                  result = string.Format(CultureInfo.InvariantCulture, "{0}", value);
+               }
+            }
+         }
+         catch
+         {
+            result = string.Empty;
+         }
+         return result;
       }
 
 

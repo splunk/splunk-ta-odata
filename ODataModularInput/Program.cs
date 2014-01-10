@@ -1,4 +1,6 @@
-﻿namespace Splunk.ModularInputs
+﻿using System.Collections;
+
+namespace Splunk.ModularInputs
 {
    using System;
    using System.Collections.Generic;
@@ -53,14 +55,14 @@
                         RequiredOnCreate = false,
                      },
                      new Argument {
-                        Name = "select",
-                        Description = "The name of properties to select and return",
+                        Name = "tailfilterproperty",
+                        Description = "The name of property to use for tail filtering",
                         DataType = DataType.String,
                         RequiredOnCreate = false,
                      },
                      new Argument {
-                        Name = "sort",
-                        Description = "Values to select and return",
+                        Name = "defaulttailfilter",
+                        Description = "A default value for the tailfilterproperty",
                         DataType = DataType.String,
                         RequiredOnCreate = false,
                      },
@@ -82,22 +84,47 @@
       /// <param name="inputDefinition">The input definition.</param>
       public override void StreamEvents(InputDefinition inputDefinition)
       {
+         string tailFilters = inputDefinition.Stanza.SingleValueParameters.GetValueOrDefault("tailfilterproperty","");
+         string filter = inputDefinition.Stanza.SingleValueParameters.GetValueOrDefault("filter", "");
+         string address = inputDefinition.Stanza.SingleValueParameters["address"];
+         string store = string.Empty;
+         string last = string.Empty;
+
+         if (!string.IsNullOrEmpty(tailFilters))
+         {
+            store = Path.Combine(inputDefinition.CheckpointDirectory, "lastvalue.txt");
+
+            last = File.Exists(store) 
+               ? File.ReadAllText(store) // .Split('\n')
+               : inputDefinition.Stanza.SingleValueParameters.GetValueOrDefault("defaulttailfilter",""); //.Split('\n');
+
+            if (!string.IsNullOrEmpty(filter))
+            {
+               filter = string.Format(filter, last);
+            }
+            else
+            {
+               address = string.Format(address, last);
+            }
+
+         }
+
          IEnumerable<IDictionary<string, object>> source = new Splunk.ODataSource()
          {
             Credentials = System.Net.CredentialCache.DefaultNetworkCredentials,
-            Address = inputDefinition.Stanza.SingleValueParameters["address"],
+            Address = address,
             Resource = inputDefinition.Stanza.SingleValueParameters.GetValueOrDefault("resource",""),
-            Filter = inputDefinition.Stanza.SingleValueParameters.GetValueOrDefault("filter",""),
+            Filter = filter,
             //OrderBy = inputDefinition.Stanza.MultiValueParameterXmlElements,
             //Select = inputDefinition.Stanza.MultiValueParameterXmlElements,            
          };
+
 
          string includeEmptyString;
          bool includeEmpty = false;
          if(inputDefinition.Stanza.SingleValueParameters.TryGetValue("includeEmpty", out includeEmptyString)) {
             bool.TryParse(includeEmptyString, out includeEmpty);
          }
-
          using (var writer = new EventStreamWriter())
          {
             foreach (IDictionary<string, object> item in source)
@@ -107,6 +134,22 @@
                   Data = item.ToString(includeEmpty: includeEmpty),
                   Stanza = inputDefinition.Stanza.Name,                  
                });
+
+               if (!string.IsNullOrEmpty(tailFilters))
+               {
+                  last = ((IDictionary) item).SelectRecursive(tailFilters.Split(',')).ToStringInvariant();
+               }
+            }
+
+            if (!string.IsNullOrEmpty(tailFilters))
+            {
+               using (var stream = File.Open(store, FileMode.Create, FileAccess.Write))
+               {
+                  using (var storeWriter = new StreamWriter(stream))
+                  {
+                     storeWriter.WriteLine(last);
+                  }
+               }
             }
          }
       }
