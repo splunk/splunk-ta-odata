@@ -12,13 +12,14 @@ if(!$SkipBuild) {
       $Env:Path += ";" + [System.Runtime.InteropServices.RuntimeEnvironment]::GetRuntimeDirectory()
     }
 
-    # msbuild $PSScriptRoot\MakePackage\MakePackage.csproj /t:CopyBits /p:platform=x86 /p:Configuration=Release /p:SolutionDir=$PSScriptRoot\
+    msbuild $PSScriptRoot\MakePackage\MakePackage.csproj /t:CopyBits /p:platform=x86 /p:Configuration=Release /p:SolutionDir=$PSScriptRoot\
     msbuild $PSScriptRoot\MakePackage\MakePackage.csproj /t:CopyBits /p:platform=x64 /p:Configuration=Release /p:SolutionDir=$PSScriptRoot\
 }
 
-# For now, need to manually remove the .Net 4.5 reference from the 3.5 config file
-# So we're building both x86 and x64 with /t:CopyBits (instead of /t:Package)
-# And then we'll edit the files and create the .tar.gz package "by hand" here:
+# This project builds in AnyCPU mode
+# Splunk doesn't believe AnyCPU could work, so it requires separate x64 and x86 copies
+# So we're building the x86 and x64 with /t:CopyBits (instead of /t:Package)
+# And then we'll copy the files and create the .tar.gz package "by hand" here:
 
 $AssemblyName = "SA-ModularInput-OData"
 $Env:OutputPath = Join-Path $PSScriptRoot "Output\Release"
