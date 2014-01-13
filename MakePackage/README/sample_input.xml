@@ -8,7 +8,9 @@
    <checkpoint_dir>C:\ProgramData\Splunk\modinputs\powershell</checkpoint_dir>
    <configuration>
       <stanza name="odata://Testing1Minute">
-         <param name="address"><![CDATA[http://bd-xd7-01/Citrix/Monitor/OData/v1/Data/Sessions?$filter=StartDate ge datetime'2014-01-08T12:00:00'&$select=StartDate,EndDate]]></param>
+         <param name="address"><![CDATA[http://bd-xd7-01.bd.splunk.com/Citrix/Monitor/OData/v1/Data/Sessions?$filter=StartDate gt datetime'{0}'&$select=StartDate,EndDate]]></param>
+         <param name="defaulttailfilter">1900-01-01T00:00:00</param>
+         <param name="tailfilterproperty">StartDate</param>
          <param name="sourcetype">nuget_packages</param>
       </stanza>
    </configuration>

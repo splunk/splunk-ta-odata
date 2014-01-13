@@ -56,13 +56,13 @@ namespace Splunk.ModularInputs
                      },
                      new Argument {
                         Name = "tailfilterproperty",
-                        Description = "The name of property to use for tail filtering",
+                        Description = "The name of a property which will be pulled from the last result and injected into the filter",
                         DataType = DataType.String,
                         RequiredOnCreate = false,
                      },
                      new Argument {
                         Name = "defaulttailfilter",
-                        Description = "A default value for the tailfilterproperty",
+                        Description = "A default value to be injected as the tail filter value for the first run",
                         DataType = DataType.String,
                         RequiredOnCreate = false,
                      },
@@ -90,7 +90,9 @@ namespace Splunk.ModularInputs
          string store = string.Empty;
          string last = string.Empty;
 
-         if (!string.IsNullOrEmpty(tailFilters))
+         bool tail = !string.IsNullOrEmpty(tailFilters);
+
+         if (tail)
          {
             store = Path.Combine(inputDefinition.CheckpointDirectory, "lastvalue.txt");
 
@@ -135,13 +137,13 @@ namespace Splunk.ModularInputs
                   Stanza = inputDefinition.Stanza.Name,                  
                });
 
-               if (!string.IsNullOrEmpty(tailFilters))
+               if (tail)
                {
                   last = ((IDictionary) item).SelectRecursive(tailFilters.Split(',')).ToStringInvariant();
                }
             }
 
-            if (!string.IsNullOrEmpty(tailFilters))
+            if (tail)
             {
                using (var stream = File.Open(store, FileMode.Create, FileAccess.Write))
                {
