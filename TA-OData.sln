@@ -10,6 +10,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{DC7DD70E-3235-4AA3-A7F5-BF2D4CFEA409}"
 	ProjectSection(SolutionItems) = preProject
 		.nuget\7za.exe = .nuget\7za.exe
+		build.ps1 = build.ps1
 		.nuget\NuGet.Config = .nuget\NuGet.Config
 		.nuget\NuGet.exe = .nuget\NuGet.exe
 		.nuget\NuGet.targets = .nuget\NuGet.targets
