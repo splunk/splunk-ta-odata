@@ -5,7 +5,7 @@
    <session_key>dontusethiskeyitsnotcurrentatall</session_key>
    <!-- note, this is nothing like the real path, but it works for testing.
        the real path is in C:\Program Files(x86) and requires elevation -->
-   <checkpoint_dir>C:\ProgramData\Splunk\modinputs\powershell</checkpoint_dir>
+   <checkpoint_dir>C:\ProgramData\Splunk\modinputs\SA-ModularInput-OData</checkpoint_dir>
    <configuration>
       <stanza name="odata://Testing1Minute">
          <param name="address"><![CDATA[http://bd-xd7-01.bd.splunk.com/Citrix/Monitor/OData/v1/Data/Sessions?$filter=StartDate gt datetime'{0}'&$select=StartDate,EndDate]]></param>
